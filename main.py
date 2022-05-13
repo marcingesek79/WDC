@@ -1,13 +1,13 @@
-import pygame
+import pygame as pg
 import os, sys
 
-pygame.font.init()
+pg.font.init()
 
-mainClock = pygame.time.Clock()
+mainClock = pg.time.Clock()
 
 WIDTH, HEIGHT = 960, 540
-WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Stary kobasa")
+WINDOW = pg.display.set_mode((WIDTH, HEIGHT))
+pg.display.set_caption("Stary kobasa")
 
 WHITE = "#ffffff"
 BLACK = "#000000"
@@ -17,9 +17,27 @@ M_GREEN = "#82cd82"
 D_GREEN = "#509b50"
 YELLOW = "#ffee75"
 
-font = pygame.font.SysFont("urwgothic", 36)
-font_s = pygame.font.SysFont("urwgothic", 14)
-font_es = pygame.font.SysFont("urwgothic", 10)
+font = pg.font.SysFont("urwgothic", 36)
+font_m = pg.font.SysFont("urwgothic", 24)
+font_s = pg.font.SysFont("urwgothic", 14)
+font_es = pg.font.SysFont("urwgothic", 10)
+
+base_color = (D_GREEN, BLACK)
+base_hover = (M_GREEN, GREY)
+
+class Button:
+    def __init__(self, colors, colors2, text, left, top, width, height):
+        self.colors = colors
+        self.text = text
+        self.colors2 = colors2
+        self.loc = pg.Rect(left, top, width, height)
+        self.hover = False
+
+    def draw(self):
+        palette = self.colors if not self.hover else self.colors2
+
+        pg.draw.rect(WINDOW, palette[0], self.loc)
+        draw_text(self.text, font_m, palette[1], WINDOW, self.loc.left + self.loc.width * .15, self.loc.top + self.loc.height * .4)
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
@@ -27,72 +45,150 @@ def draw_text(text, font, color, surface, x, y):
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
 
-def menuDraw(selected):
-    WINDOW.fill(L_GREEN)
-    draw_text('New Game', font, GREY if selected == 0 else BLACK, WINDOW, 20, 20)
-    draw_text('Load Game', font, GREY if selected == 1 else BLACK, WINDOW, 20, 80)
-    draw_text('Quit', font, GREY if selected == 2 else BLACK, WINDOW, 20, 140)
-    pygame.display.update()
+def FirstMenu():
+    loop = True;
+    b1 = Button(base_color, base_hover, "Podpisz Dokument", 120, 100, 300, 200)
+    b2 = Button(base_color, base_hover, "Zweryfikuj Dokument", 540,100,300,200)
 
-def main():
-    gameloop = True
-    selected = 0
-    while gameloop:
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
+    while loop:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    pg.quit()
                     sys.exit()
-                if event.key == pygame.K_DOWN and selected < 2:
-                    selected += 1
-                if event.key == pygame.K_UP and selected > 0:
-                    selected -= 1
-                if event.key in (pygame.K_SPACE, pygame.K_RETURN):
-                    gameloop = False
-                    [menuNew, menuLoad, gameQuit][selected]()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if b1.hover:
+                    SignMenu()
+                if b2.hover:
+                    VerifyMenu()
 
-        menuDraw(selected)
-        mainClock.tick(60)
+            for button in [b1,b2]:
+                if button.loc.collidepoint(pg.mouse.get_pos()):
+                    button.hover = True
+                else:
+                    button.hover = False
 
-    pygame.quit()
+            WINDOW.fill(L_GREEN)
 
-def menuNewDraw(text, selected, errtext):
-    WINDOW.fill(D_GREEN)
-    draw_text('Map width: '+text[0], font, GREY if selected == 0 else BLACK, WINDOW, 20, 20)
-    draw_text('Map height: '+text[1], font, GREY if selected == 1 else BLACK, WINDOW, 20, 80)
-    draw_text(errtext, font, BLACK, WINDOW, 20, 140)
-    pygame.display.update()
+            b1.draw()
+            b2.draw()
 
-def menuNew(errtext = ""):
-    gameloop = True
-    selected = 0
-    text = ["",""]
+            pg.display.update()
 
-    while gameloop:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
+def SignMenu():
+    print("xddd")
+    loop = True;
+    b1 = Button(base_color, base_hover, "O KURWA TWOJA STARA", 540,100,300,700)
+
+    while loop:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    pg.quit()
                     sys.exit()
-                if event.key in (pygame.K_SPACE, pygame.K_RETURN) and text[selected]:
-                    if selected != 1:
-                        selected += 1
-                    else:
-                        gameloop = False
-                elif event.key == pygame.K_BACKSPACE:
-                    text[selected] = text[selected][:-1]
-                elif event.unicode.isdigit():
-                    text[selected] += event.unicode
+            if event.type == pg.MOUSEBUTTONDOWN:
+                pass
+
+        for button in [b1]:
+            if button.loc.collidepoint(pg.mouse.get_pos()):
+                button.hover = True
+            else:
+                button.hover = False
+
+        WINDOW.fill(L_GREEN)
+
+        b1.draw()
+
+        pg.display.update()
+
+def VerifyMenu():
+    loop = True;
+    b1 = Button(base_color, base_hover, "O KURWA TWÓJ STARY", 120, 100, 700, 200)
+
+    while loop:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    pg.quit()
+                    sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                pass
+
+        for button in [b1]:
+            if button.loc.collidepoint(pg.mouse.get_pos()):
+                button.hover = True
+            else:
+                button.hover = False
+
+        WINDOW.fill(L_GREEN)
+
+        b1.draw()
+
+        pg.display.update()
+
+# def main():
+#     gameloop = True
+#     selected = 0
+#     while gameloop:
+#
+#         for event in pg.event.get():
+#             if event.type == pg.QUIT:
+#                 pg.quit()
+#                 sys.exit()
+#             if event.type == pg.KEYDOWN:
+#                 if event.key == pg.K_ESCAPE:
+#                     pg.quit()
+#                     sys.exit()
+#                 if event.key == pg.K_DOWN and selected < 2:
+#                     selected += 1
+#                 if event.key == pg.K_UP and selected > 0:
+#                     selected -= 1
+#                 if event.key in (pg.K_SPACE, pg.K_RETURN):
+#                     gameloop = False
+#                     [menuNew, menuLoad, gameQuit][selected]()
+#
+#         menuDraw(selected)
+#         mainClock.tick(60)
+#
+#     pg.quit()
 
 
-        menuNewDraw(text, selected, errtext)
-        mainClock.tick(60)
+# def menuNew(errtext = ""):
+#     gameloop = True
+#     selected = 0
+#     text = ["",""]
+#
+#     while gameloop:
+#         for event in pg.event.get():
+#             if event.type == pg.QUIT:
+#                 pg.quit()
+#                 sys.exit()
+#             if event.type == pg.KEYDOWN:
+#                 if event.key == pg.K_ESCAPE:
+#                     pg.quit()
+#                     sys.exit()
+#                 if event.key in (pg.K_SPACE, pg.K_RETURN) and text[selected]:
+#                     if selected != 1:
+#                         selected += 1
+#                     else:
+#                         gameloop = False
+#                 elif event.key == pg.K_BACKSPACE:
+#                     text[selected] = text[selected][:-1]
+#                 elif event.unicode.isdigit():
+#                     text[selected] += event.unicode
+#
+#
+#         menuNewDraw(text, selected, errtext)
+#         mainClock.tick(60)
 
-menuNew()
+if __name__ == '__main__':
+    FirstMenu()
