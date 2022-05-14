@@ -10,10 +10,13 @@ class App(object):
         self.state_name = start_state
         self.state = self.states[self.state_name]
 
+
+    #Przekazuje eventy do stanów
     def event_loop(self):
         for event in pygame.event.get():
             self.state.get_event(event)
 
+    #Zmienia stan
     def flip_state(self):
         current_state = self.state_name
         next_state = self.state.next_state
@@ -23,6 +26,7 @@ class App(object):
         self.state = self.states[self.state_name]
         self.state.startup(persistent)
 
+    #Jeśli state.done to zmienia stan na następny a jak nie to obsługuje aktualny
     def update(self, dt):
         if self.state.quit:
             self.done = True
@@ -33,6 +37,7 @@ class App(object):
     def draw(self):
         self.state.draw(self.screen)
 
+    #Głowna pętla która odpala wszystkie funkcje stanu
     def run(self):
         while not self.done:
             dt = self.clock.tick(self.fps)

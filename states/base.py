@@ -1,18 +1,11 @@
 import pygame
 
-WHITE = "#ffffff"
-BLACK = "#000000"
-GREY = "#c0c0c0"
-L_GREEN = "#b4ffb4"
-M_GREEN = "#82cd82"
-D_GREEN = "#509b50"
-YELLOW = "#ffee75"
-
-base_color = (D_GREEN, BLACK)
-base_hover = (M_GREEN, GREY)
-
 class BaseState(object):
     def __init__(self):
+        # Jeśli done == True to ten stan sie zamyka i otwiera sie next_state
+        # quit == True zamyka apke
+        # persist to słownik który jest przekazywany miedzy stanami więc sie dane zapisują
+
         self.done = False
         self.quit = False
         self.next_state = None
@@ -32,6 +25,7 @@ class BaseState(object):
     def draw(self, surface):
         pass
 
+    #Generator funkcji które zmieniają stan na inny
     def switch_to(self, state):
         def switch(menu):
             menu.next_state = state
