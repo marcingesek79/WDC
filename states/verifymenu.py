@@ -8,7 +8,7 @@ class VerifyMenu(BaseState):
         super(VerifyMenu, self).__init__()
         self.font = pygame.font.SysFont("urwgothic", 24)
 
-        bx = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "X2", (850,50,80,40), self.switch_to("FIRSTMENU"))
+        bx = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "X2", (870,40,40,40), self.switch_to("FIRSTMENU"))
         self.buttons = [bx]
 
         self.next_state = None
