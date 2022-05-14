@@ -1,14 +1,16 @@
 import pygame
 
 class Button:
-    def __init__(self, colors, colors2, font, text, left, top, width, height):
+    def __init__(self, colors, colors2, font, text, rect, click):
         self.colors = colors
         self.colors2 = colors2
         self.text = text
         self.font = font
 
-        self.rect = pygame.Rect(left, top, width, height)
+        self.rect = pygame.Rect(rect)
+
         self.hover = False
+        self.click = click
 
     def draw(self, surface):
         palette = self.colors if not self.hover else self.colors2

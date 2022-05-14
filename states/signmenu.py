@@ -3,14 +3,13 @@ from .base import BaseState
 from things.button import Button
 import things.colors as Colors
 
-class FirstMenu(BaseState):
+class SignMenu(BaseState):
     def __init__(self):
-        super(FirstMenu, self).__init__()
+        super(SignMenu, self).__init__()
         self.font = pygame.font.SysFont("urwgothic", 24)
 
-        b1 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Podpisz Dokument", (120,100,300,200), self.switch_to("SIGNMENU"))
-        b2 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Zweryfikuj Dokument", (540,100,300,200), self.switch_to("VERIFYMENU"))
-        self.buttons = [b1,b2]
+        bx = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "X", (850,50,80,40), self.switch_to("FIRSTMENU"))
+        self.buttons = [bx]
 
         self.next_state = None
 
