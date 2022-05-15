@@ -65,11 +65,11 @@ class SignMenu(BaseState):
         b3 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Wygeneruj klucze", (60,490,210,40), self.switch_to("GENERATIONMENU"))
         b4 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Podpisz", (600,490,240,40), sign)
 
-        t1 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,150,240,60))
-        t2 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,240,240,60))
+        self.t1 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,150,240,60))
+        self.t2 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,240,240,60))
         self.selected_textbox = None
 
-        self.buttons = [bx,b1,b2,b3,b4,t1,t2]
+        self.buttons = [bx,b1,b2,b3,b4,self.t1,self.t2]
 
         self.chosen_file = None
         self.chosen_key = None
