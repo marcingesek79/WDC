@@ -3,6 +3,7 @@ import pygame
 from states.firstmenu import FirstMenu
 from states.signmenu import SignMenu
 from states.verifymenu import VerifyMenu
+from states.generationmenu import GenerationMenu
 from app import App
 
 # Nie patrz na to ani na app.py wgl bo tam nic ważnego nie ma
@@ -14,7 +15,8 @@ screen = pygame.display.set_mode((960, 540))
 states = {
     "FIRSTMENU": FirstMenu(),
     "SIGNMENU": SignMenu(),
-    "VERIFYMENU": VerifyMenu()
+    "VERIFYMENU": VerifyMenu(),
+    "GENERATIONMENU": GenerationMenu()
 }
 
 app = App(screen, states, "FIRSTMENU")
