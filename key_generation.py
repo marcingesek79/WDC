@@ -1,4 +1,11 @@
 from Crypto.PublicKey import RSA
+import os
+
+FORMATS = [
+    ".der",
+    ".pem",
+    ".key"
+]
 
 """
     Function that generates public and private key pair.
@@ -15,7 +22,7 @@ from Crypto.PublicKey import RSA
 
 # generating private and public key pair
 def generate_key_pair(format, private_key_name = "private_key", public_key_name = "public_key"):
-    if format != ".pem" and format != ".der" and format != ".key":
+    if format not in FORMATS:
         print("Wrong format")
         return
 
@@ -32,3 +39,24 @@ def generate_key_pair(format, private_key_name = "private_key", public_key_name 
     file_out = open(public_key_name + format, "wb")
     file_out.write(public_key)
     file_out.close()
+
+
+"""
+    Function that removes all generated keys with .pem, .der, .key extensions.
+
+    INPUT:
+    - path - dir the files will be removed from
+             if path is not passed, then the keys will be removed from current (app) dir
+
+    OUTPUT:
+    deleting key files
+"""
+
+def delete_keys(path = "."):
+    dirs = os.listdir(path)
+    for item in dirs:
+        for format in FORMATS:
+            if item.endswith(format):
+                os.remove(os.path.join(path, item))
+                break
+
