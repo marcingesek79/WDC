@@ -82,6 +82,7 @@ class SignMenu(BaseState):
             else:
                 button.hover = False
 
+
     def draw(self, surface):
         surface.fill(Colors.L_GREEN)
         for button in self.buttons:
@@ -97,4 +98,4 @@ class SignMenu(BaseState):
         draw_text(surface, self.chosen_key if self.chosen_key else "Nie wybrano klucza", self.font, Colors.BLACK, keybox)
 
         draw_text(surface, "Plik:", self.font, Colors.BLACK, pygame.Rect(60,60,100,50))
-        draw_text(surface, "Prywatny klucz:", self.font, Colors.BLACK, pygame.Rect(100,300,100,50))
+        draw_text(surface, "Prywatny klucz:", self.font, Colors.BLACK, pygame.Rect(80,300,100,50))
