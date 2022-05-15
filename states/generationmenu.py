@@ -31,8 +31,6 @@ class GenerationMenu(BaseState):
         super(GenerationMenu, self).__init__()
         self.font = pygame.font.SysFont("urwgothic", 24)
 
-        space = 30
-
         bx = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "X", (870,40,40,40), self.switch_to("SIGNMENU"))
         b1 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, ".der", (480,250,180,40), gen_der)
         b2 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, ".key", (270,250,180,40), gen_key)
