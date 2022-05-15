@@ -23,9 +23,6 @@ def prompt_file():
     return file_name
 
 def choose_file(menu):
-    if menu.file_cooldown > 0:
-        return
-    menu.file_cooldown = 1
     menu.chosen_file = prompt_file()
 
 def prompt_key():
@@ -33,18 +30,18 @@ def prompt_key():
     top.withdraw()
     key_name = tkinter.filedialog.askopenfilename(parent=top)
 
+    if not key_name:
+        return None
+
     for format in kg.FORMATS:
         if key_name.endswith(format):
             top.destroy()
             return key_name
-    
+
     top.destroy()
     return None
 
 def choose_key(menu):
-    if menu.file_cooldown > 0:
-        return
-    menu.file_cooldown = 1
     menu.chosen_key = prompt_key()
 
 class SignMenu(BaseState):
@@ -60,7 +57,6 @@ class SignMenu(BaseState):
         self.buttons = [bx,b1,b2,b3,b4]
 
         self.chosen_file = None
-        self.file_cooldown = 0
         self.chosen_key = None
 
         self.next_state = None
@@ -85,9 +81,6 @@ class SignMenu(BaseState):
                 button.hover = True
             else:
                 button.hover = False
-                #FARMAZON żeby dało sie kliknąć ponownie dopiero jak zdejmiesz z tego myszke
-                if button.click == choose_file:
-                    self.file_cooldown = 0
 
     def draw(self, surface):
         surface.fill(Colors.L_GREEN)
