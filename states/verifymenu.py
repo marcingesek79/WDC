@@ -25,6 +25,9 @@ def prompt_key():
     top.withdraw()
     key_name = tkinter.filedialog.askopenfilename(parent=top)
 
+    if not key_name:
+        return None
+
     for format in kg.FORMATS:
         if key_name.endswith(format):
             top.destroy()
