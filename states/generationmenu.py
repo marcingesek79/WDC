@@ -22,8 +22,9 @@ class GenerationMenu(BaseState):
         b1 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, ".der", (480,250,180,40), do_nothing)
         b2 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, ".key", (270,250,180,40), do_nothing)
         b3 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, ".pem", (60,250,180,40), do_nothing)
+        b4 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Usuń klucze", (60, 300, 600, 40), do_nothing)
         
-        self.buttons = [bx,b1,b2,b3]
+        self.buttons = [bx,b1,b2,b3,b4]
         self.next_state = None
 
     def get_event(self, event):
@@ -44,6 +45,8 @@ class GenerationMenu(BaseState):
                     elif button.text == ".pem":
                         kg.delete_keys()
                         kg.generate_key_pair(".pem")
+                    elif button.text == "Usuń klucze":
+                        kg.delete_keys()
                     else:
                         button.click(self)
 
