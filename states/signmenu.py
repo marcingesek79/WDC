@@ -9,6 +9,7 @@ from things.textbox import Textbox
 import things.colors as Colors
 from things.helpers import draw_text
 import key_generation as kg
+import signature as sg
 
 formats = (
     ("der", "*.der"),
@@ -19,9 +20,6 @@ formats = (
 def do_nothing(menu):
     pass
 
-#TO DO ZMIANY, niech zwraca plik czy jego nazwe czy whatever
-#Jesli zwraca cos innego niz string to zmien żeby nie printowało w draw()
-#chosen_file tylko nw str(chosen_file.name) wiesz o co cho
 def prompt_file():
     """Create a Tk file dialog and cleanup when finished"""
     top = tkinter.Tk()
@@ -52,6 +50,10 @@ def prompt_key():
 def choose_key(menu):
     menu.chosen_key = prompt_key()
 
+def sign(menu):
+    if menu.chosen_file and menu.chosen_key:
+        sg.generate_signature(menu.chosen_key, menu.chosen_file)
+
 class SignMenu(BaseState):
     def __init__(self):
         super(SignMenu, self).__init__()
@@ -61,7 +63,7 @@ class SignMenu(BaseState):
         b1 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Wybierz plik", (300,250,180,40), choose_file)
         b2 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Wybierz klucz", (300,490,180,40), choose_key)
         b3 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Wygeneruj klucze", (60,490,210,40), self.switch_to("GENERATIONMENU"))
-        b4 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Podpisz", (600,490,240,40), do_nothing)
+        b4 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Podpisz", (600,490,240,40), sign)
 
         t1 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,150,240,60))
         t2 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,240,240,60))
