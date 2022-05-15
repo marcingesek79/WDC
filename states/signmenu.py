@@ -1,9 +1,11 @@
 import pygame
 import tkinter
 import tkinter.filedialog
+from datetime import date
 
 from .base import BaseState
 from things.button import Button
+from things.textbox import Textbox
 import things.colors as Colors
 from things.helpers import draw_text
 import key_generation as kg
@@ -62,7 +64,12 @@ class SignMenu(BaseState):
         b2 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Wybierz klucz", (300,490,180,40), choose_key)
         b3 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Wygeneruj klucze", (60,490,210,40), self.switch_to("GENERATIONMENU"))
         b4 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Podpisz", (600,490,240,40), sign)
-        self.buttons = [bx,b1,b2,b3,b4]
+
+        t1 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,150,240,60))
+        t2 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,240,240,60))
+        self.selected_textbox = None
+
+        self.buttons = [bx,b1,b2,b3,b4,t1,t2]
 
         self.chosen_file = None
         self.chosen_key = None
@@ -75,7 +82,15 @@ class SignMenu(BaseState):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.quit = True
+            if self.selected_textbox:
+                if event.key == pygame.K_BACKSPACE:
+                    self.selected_textbox.text = self.selected_textbox.text[:-1]
+                elif event.unicode.isalnum() or event.unicode == ' ':
+                    self.selected_textbox.text += event.unicode
         if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.selected_textbox:
+                self.selected_textbox.selected = False
+                self.selected_textbox = None
             for button in self.buttons:
                 if button.hover:
                     if button.text == "X" or button.text == "Wygeneruj klucz":
@@ -95,15 +110,20 @@ class SignMenu(BaseState):
         surface.fill(Colors.L_GREEN)
         for button in self.buttons:
             button.draw(surface)
+        # for tbox in self.textboxes:
+        #     tbox.draw(surface)
 
         filebox = pygame.Rect(60,60,420,180)
         keybox = pygame.Rect(60,300,420,180)
+        datebox = pygame.Rect(600,330,240,60)
 
         pygame.draw.rect(surface, Colors.D_GREEN, filebox)
         pygame.draw.rect(surface, Colors.D_GREEN, keybox)
+        pygame.draw.rect(surface, Colors.D_GREEN, datebox)
 
         draw_text(surface, self.chosen_file if self.chosen_file else "Nie wybrano pliku", self.font, Colors.BLACK, filebox)
         draw_text(surface, self.chosen_key if self.chosen_key else "Nie wybrano klucza", self.font, Colors.BLACK, keybox)
+        draw_text(surface, str(date.today()), self.font, Colors.BLACK, datebox)
 
         draw_text(surface, "Plik:", self.font, Colors.BLACK, pygame.Rect(60,60,100,50))
         draw_text(surface, "Prywatny klucz:", self.font, Colors.BLACK, pygame.Rect(80,300,100,50))
