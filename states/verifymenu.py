@@ -6,6 +6,7 @@ from things.button import Button
 import things.colors as Colors
 from things.helpers import draw_text
 import key_generation as kg
+import signature as sg
 
 formats = (
     ("der", "*.der"),
@@ -45,6 +46,10 @@ def prompt_key():
 def choose_key(menu):
     menu.chosen_key = prompt_key()
 
+def verify(menu):
+    if menu.chosen_key and menu.chosen_file:
+        print(sg.verify_signature(menu.chosen_key, menu.chosen_file))
+
 class VerifyMenu(BaseState):
     def __init__(self):
         super(VerifyMenu, self).__init__()
@@ -53,8 +58,7 @@ class VerifyMenu(BaseState):
         bx = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "X", (870,40,40,40), self.switch_to("FIRSTMENU"))
         b1 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Wybierz plik", (300,250,180,40), choose_file)
         b2 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Wybierz klucz", (300,490,180,40), choose_key)
-
-        b3 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Zweryfikuj", (600,490,240,40), do_nothing)
+        b3 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Zweryfikuj", (600,490,240,40), verify)
         self.buttons = [bx,b1,b2,b3]
 
         self.chosen_file = None
