@@ -125,5 +125,9 @@ class SignMenu(BaseState):
         draw_text(surface, self.chosen_key if self.chosen_key else "Nie wybrano klucza", self.font, Colors.BLACK, keybox)
         draw_text(surface, str(date.today()), self.font, Colors.BLACK, datebox)
 
+        draw_text(surface, "Nazwa:", self.font, Colors.BLACK, pygame.Rect(520, 170, 50, 30))
+        draw_text(surface, "Powód:", self.font, Colors.BLACK, pygame.Rect(520, 260, 50, 30))
+        draw_text(surface, "Data:", self.font, Colors.BLACK, pygame.Rect(520, 350, 50, 30))
+
         draw_text(surface, "Plik:", self.font, Colors.BLACK, pygame.Rect(60,60,100,50))
         draw_text(surface, "Prywatny klucz:", self.font, Colors.BLACK, pygame.Rect(80,300,100,50))
