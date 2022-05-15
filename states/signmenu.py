@@ -17,9 +17,6 @@ formats = (
 def do_nothing(menu):
     pass
 
-#TO DO ZMIANY, niech zwraca plik czy jego nazwe czy whatever
-#Jesli zwraca cos innego niz string to zmien żeby nie printowało w draw()
-#chosen_file tylko nw str(chosen_file.name) wiesz o co cho
 def prompt_file():
     """Create a Tk file dialog and cleanup when finished"""
     top = tkinter.Tk()
