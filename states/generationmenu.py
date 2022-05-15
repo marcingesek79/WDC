@@ -6,7 +6,7 @@ from .base import BaseState
 from things.button import Button
 import things.colors as Colors
 from things.helpers import draw_text
-from key_generation import generate_key_pair
+import key_generation as kg
 
 def do_nothing(menu):
     pass
@@ -36,11 +36,14 @@ class GenerationMenu(BaseState):
             for button in self.buttons:
                 if button.hover:
                     if button.text == ".der":
-                        generate_key_pair(".der")
+                        kg.delete_keys()
+                        kg.generate_key_pair(".der")
                     elif button.text == ".key":
-                        generate_key_pair(".key")
+                        kg.delete_keys()
+                        kg.generate_key_pair(".key")
                     elif button.text == ".pem":
-                        generate_key_pair(".pem")
+                        kg.delete_keys()
+                        kg.generate_key_pair(".pem")
                     else:
                         button.click(self)
 
