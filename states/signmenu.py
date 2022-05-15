@@ -8,6 +8,12 @@ import things.colors as Colors
 from things.helpers import draw_text
 import key_generation as kg
 
+formats = (
+    ("der", "*.der"),
+    ("pem", "*.pem"),
+    ("key", "*.key")
+)
+
 def do_nothing(menu):
     pass
 
@@ -28,7 +34,7 @@ def choose_file(menu):
 def prompt_key():
     top = tkinter.Tk()
     top.withdraw()
-    key_name = tkinter.filedialog.askopenfilename(parent=top)
+    key_name = tkinter.filedialog.askopenfilename(parent=top, filetypes=formats)
 
     if not key_name:
         return None
