@@ -34,11 +34,14 @@ def prompt_key():
     if not key_name:
         return None
 
+    if not key_name:
+        return None
+
     for format in kg.FORMATS:
         if key_name.endswith(format):
             top.destroy()
             return key_name
-    
+
     top.destroy()
     return None
 
