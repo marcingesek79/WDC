@@ -9,6 +9,7 @@ import things.colors as Colors
 from things.helpers import draw_text
 import key_generation as kg
 import signature as sg
+import platform
 
 formats = (
     ("der", "*.der"),
@@ -54,20 +55,21 @@ def choose_key(menu):
 def verify(menu):
     if menu.chosen_key and menu.chosen_file:
         file = open("signature.pem", "rb")
+        os_name = platform.system()
+        index = 58 if os_name == "Windows" else 54
         lines = file.read()
-        lines2 = lines[0:-54]
-        lines3 = lines[-54:]
+        lines2 = lines[0:-index]
+        lines3 = lines[-index:]
         file.close()
-
         file = open("signature_stripped.pem", "wb")
         file.write(lines2)
         file.close()
+
 
         metadata = lines3.decode()
         menu.emptyboxes[1].text = metadata[1:11].strip()
         menu.emptyboxes[2].text = metadata[12:42].strip()
         menu.emptyboxes[3].text = metadata[43:].strip()
-
         result = sg.verify_signature(menu.chosen_key, menu.chosen_file)
         menu.emptyboxes[0].text = str("Podpis ważny" if result else "Podpis nieważny")
 

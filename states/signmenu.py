@@ -58,8 +58,6 @@ def sign(menu):
 
         sg.generate_signature(menu.chosen_key, menu.chosen_file)
 
-<<<<<<< HEAD
-=======
         file = open("signature.pem", "a")
 
 
@@ -69,7 +67,6 @@ def sign(menu):
         #file.write(f"Signed with .{ext} key.")
         file.close()
 
->>>>>>> 03d95f463909c3c5994f41a6e3d3a5360ec0f196
 class SignMenu(BaseState):
     def __init__(self):
         super(SignMenu, self).__init__()
