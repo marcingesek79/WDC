@@ -58,11 +58,13 @@ def sign(menu):
 
         sg.generate_signature(menu.chosen_key, menu.chosen_file)
 
-        file = open("meta.data", "w")
-        file.write(f"Name: {name}\n")
-        file.write(f"Description: {description}\n")
-        file.write(f"Date: {str(date.today())}\n")
-        file.write(f"Signed with .{ext} key.")
+        file = open("signature.pem", "a")
+        file.write("\nsiema")
+        file.write("\ndupa")
+        file.close()
+
+        file = open("signature.pem", "rb")
+        print(file.readlines())
         file.close()
 
 
