@@ -1,14 +1,11 @@
 import pygame
+from .emptybox import EmptyBox
 from .helpers import draw_text
 
-class Button:
+class Button(EmptyBox):
     def __init__(self, colors, colors2, font, text, rect, click):
-        self.colors = colors #Kolor
+        super(Button, self).__init__(colors, font, text, rect)
         self.colors2 = colors2 #Alt Kolor kiedy hover == True
-        self.text = text
-        self.font = font
-
-        self.rect = pygame.Rect(rect)
 
         self.hover = False
         self.click = click #Funkcja callback wywoływana jak klikniesz
