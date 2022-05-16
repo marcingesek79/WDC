@@ -122,8 +122,6 @@ class SignMenu(BaseState):
         surface.fill(Colors.L_GREEN)
         for button in self.buttons:
             button.draw(surface)
-        # for tbox in self.textboxes:
-        #     tbox.draw(surface)
 
         filebox = pygame.Rect(60,60,420,180)
         keybox = pygame.Rect(60,300,420,180)
