@@ -77,8 +77,8 @@ class SignMenu(BaseState):
         b3 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Wygeneruj klucze", (60,490,210,40), self.switch_to("GENERATIONMENU"))
         b4 = Button(Colors.BTN_BASE, Colors.BTN_HOV, self.font, "Podpisz", (600,490,240,40), sign)
 
-        self.t1 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,150,240,60))
-        self.t2 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,240,240,60))
+        self.t1 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,150,240,60), 10)
+        self.t2 = Textbox(Colors.BTN_BASE, Colors.TXT_SEL, self.font, "", (600,240,240,60), 30)
         self.selected_textbox = None
 
         self.buttons = [bx,b1,b2,b3,b4,self.t1,self.t2]
@@ -98,7 +98,8 @@ class SignMenu(BaseState):
                 if event.key == pygame.K_BACKSPACE:
                     self.selected_textbox.text = self.selected_textbox.text[:-1]
                 elif event.unicode.isalnum() or event.unicode == ' ':
-                    self.selected_textbox.text += event.unicode
+                    if len(self.selected_textbox.text) < self.selected_textbox.max_len:
+                        self.selected_textbox.text += event.unicode
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.selected_textbox:
                 self.selected_textbox.selected = False
