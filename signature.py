@@ -23,7 +23,7 @@ def generate_signature(key, data, signature_file="signature.pem"):
         except:
             print("This is not a private key")
             return
-        
+
         file = open(signature_file, "wb")
         file.write(signature)
         file.close()
@@ -43,7 +43,7 @@ def generate_signature(key, data, signature_file="signature.pem"):
 
 """
 
-def verify_signature(key, data, signature_file="signature.pem"):
+def verify_signature(key, data, signature_file="signature_stripped.pem"):
     hash = SHA256.new(open(data, "rb").read())
     sender_public_key = RSA.import_key(open(key).read())
     signer = PKCS1_v1_5.new(sender_public_key)
@@ -57,4 +57,3 @@ def verify_signature(key, data, signature_file="signature.pem"):
     except:
         print("Signature not found")
         return False
-
