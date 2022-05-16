@@ -3,9 +3,10 @@ from .button import Button
 from .helpers import draw_text
 
 class Textbox(Button):
-    def __init__(self, colors, colors2, font, text, rect):
+    def __init__(self, colors, colors2, font, text, rect, max_len):
         super(Textbox, self).__init__(colors, colors2, font, text, rect, self.select)
         self.selected = False
+        self.max_len = max_len
 
     def draw(self, surface):
         #Rysuje guzik z wyśrodkowanym tekstem
