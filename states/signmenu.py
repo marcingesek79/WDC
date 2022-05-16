@@ -2,7 +2,7 @@ import pygame
 import tkinter
 import tkinter.filedialog
 from datetime import date
-
+import os
 from .base import BaseState
 from things.button import Button
 from things.textbox import Textbox
@@ -52,7 +52,19 @@ def choose_key(menu):
 
 def sign(menu):
     if menu.chosen_file and menu.chosen_key:
+        name = menu.t1.text
+        description = menu.t2.text
+        ext = menu.chosen_key.split(".")[1]
+
         sg.generate_signature(menu.chosen_key, menu.chosen_file)
+
+        file = open("meta.data", "w")
+        file.write(f"Name: {name}\n")
+        file.write(f"Description: {description}\n")
+        file.write(f"Date: {str(date.today())}\n")
+        file.write(f"Signed with .{ext} key.")
+        file.close()
+
 
 class SignMenu(BaseState):
     def __init__(self):
@@ -126,7 +138,7 @@ class SignMenu(BaseState):
         draw_text(surface, str(date.today()), self.font, Colors.BLACK, datebox)
 
         draw_text(surface, "Nazwa:", self.font, Colors.BLACK, pygame.Rect(520, 170, 50, 30))
-        draw_text(surface, "Powód:", self.font, Colors.BLACK, pygame.Rect(520, 260, 50, 30))
+        draw_text(surface, "Opis:", self.font, Colors.BLACK, pygame.Rect(520, 260, 50, 30))
         draw_text(surface, "Data:", self.font, Colors.BLACK, pygame.Rect(520, 350, 50, 30))
 
         draw_text(surface, "Plik:", self.font, Colors.BLACK, pygame.Rect(60,60,100,50))

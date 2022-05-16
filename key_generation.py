@@ -56,7 +56,7 @@ def delete_keys(path = "."):
     dirs = os.listdir(path)
     for item in dirs:
         for format in FORMATS:
-            if item.endswith(format):
+            if item.endswith(format) or item.endswith(".data"):
                 os.remove(os.path.join(path, item))
                 break
 
