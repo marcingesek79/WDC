@@ -58,16 +58,6 @@ def sign(menu):
 
         sg.generate_signature(menu.chosen_key, menu.chosen_file)
 
-        file = open("signature.pem", "a")
-        file.write("\nsiema")
-        file.write("\ndupa")
-        file.close()
-
-        file = open("signature.pem", "rb")
-        print(file.readlines())
-        file.close()
-
-
 class SignMenu(BaseState):
     def __init__(self):
         super(SignMenu, self).__init__()
