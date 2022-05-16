@@ -1,4 +1,5 @@
 import pygame
+import os, sys
 import tkinter
 import tkinter.filedialog
 from .base import BaseState
@@ -52,8 +53,25 @@ def choose_key(menu):
 
 def verify(menu):
     if menu.chosen_key and menu.chosen_file:
+        file = open("signature.pem", "rb")
+        lines = file.read()
+        lines2 = lines[0:-54]
+        lines3 = lines[-54:]
+        file.close()
+
+        file = open("signature_stripped.pem", "wb")
+        file.write(lines2)
+        file.close()
+
+        metadata = lines3.decode()
+        menu.emptyboxes[1].text = metadata[1:11].strip()
+        menu.emptyboxes[2].text = metadata[12:42].strip()
+        menu.emptyboxes[3].text = metadata[43:].strip()
+
         result = sg.verify_signature(menu.chosen_key, menu.chosen_file)
         menu.emptyboxes[0].text = str("Podpis ważny" if result else "Podpis nieważny")
+
+        os.remove("signature_stripped.pem")
 
 class VerifyMenu(BaseState):
     def __init__(self):

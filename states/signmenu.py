@@ -58,6 +58,18 @@ def sign(menu):
 
         sg.generate_signature(menu.chosen_key, menu.chosen_file)
 
+<<<<<<< HEAD
+=======
+        file = open("signature.pem", "a")
+
+
+        file.write(f"\n{name.ljust(menu.t1.max_len)}\n")
+        file.write(f"{description.ljust(menu.t2.max_len)}\n")
+        file.write(f"{str(date.today())}\n")
+        #file.write(f"Signed with .{ext} key.")
+        file.close()
+
+>>>>>>> 03d95f463909c3c5994f41a6e3d3a5360ec0f196
 class SignMenu(BaseState):
     def __init__(self):
         super(SignMenu, self).__init__()
